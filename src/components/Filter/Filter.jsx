@@ -1,20 +1,28 @@
 import PropTypes from 'prop-types';
-export const Filter =({searchContact, handleFind})=>{
-    return(
+import { useContext } from 'react';
+import { Context } from 'stateContext/GlobalContext';
+export const Filter = () => {
+  const { searchContact, setSearchContact } = useContext(Context);
+
+  const handleFind = ({ target }) => {
+    const normalizedValue = target.value.trim().toLocaleLowerCase();
+    setSearchContact(normalizedValue);
+  };
+  return (
     <>
-        <p>Find contacts by name</p>
-        <input
-                onChange={handleFind}
-                value={searchContact}
-                name="searchContact"
-                type="text"
-                placeholder="Search contact..."        
-        />
+      <p>Find contacts by name</p>
+      <input
+        onChange={handleFind}
+        value={searchContact}
+        name="searchContact"
+        type="text"
+        placeholder="Search contact..."
+      />
     </>
-    )
-}
+  );
+};
 
 Filter.propTypes = {
-    searchContact: PropTypes.string.isRequired,
-    handleFind: PropTypes.func,
-}
+  searchContact: PropTypes.string,
+  handleFind: PropTypes.func,
+};
